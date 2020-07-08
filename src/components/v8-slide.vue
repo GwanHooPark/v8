@@ -8,7 +8,7 @@
           <small>비즈서비스 개발팀  <a href="">박관후</a> / <a href="">ghpark@daou.co.kr</a></small>
         </p>
       </section>
-      <section>Slide1</section>
+      <section><img src="../assets/logo.png"/></section>
       <section>Slide2</section>
     </div>
   </div>
