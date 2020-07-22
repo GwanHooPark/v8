@@ -18,12 +18,16 @@
         list-style-type: none;
     }
     section div.title {
-        border-bottom: 3px solid #ccc;
-        padding: 25px 10px 10px 0;
-        margin: 0 0 25px 0;
+        position: fixed;
+        top : -70px;
+        border-bottom: 2px solid #ccc;
         display: block;
-        width: 100%;
         text-align: left;
+        margin-left: 100px;
+    }
+    div.title {
+        padding: 20px;
+        font-size: 30px;
     }
     .subtitle {
         position : absolute;
