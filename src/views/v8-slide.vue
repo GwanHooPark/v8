@@ -1,5 +1,6 @@
 <template>
   <div class="reveal">
+    <div class="title" id="title"></div>
     <div class="slides">
       <section class="present" style="display: block;">
         <h1>V8</h1>
@@ -8,20 +9,19 @@
           <small>비즈서비스 개발팀  <a href="">박관후</a> / <a href="">ghpark@daou.co.kr</a></small>
         </p>
       </section>
-      <section>
+      <section data-title="Index">
         <ol>
           <li>JavaScript Engine</li>
-          <li>V8 특징</li>
           <li>JavaScript Engine 작동원리</li>
           <li>최적화의 조건</li>
-          <li>처리성능 향상 기법</li>
+          <li>처리성능 향상을 위한 방법</li>
         </ol>
       </section>
-      <section>
+      <section data-title="1.JS Engine">
         <h3>JavaScript Engine 이란?</h3>
         <p>javascript 를 실행하는 프로그램 또는 인터프리터</p>
       </section>
-      <section>
+      <section data-title="1.JS Engine">
         <h3>Javascript 엔진의 종류</h3>
         <ul>
           <li>- SpiderMonkey</li>
@@ -31,7 +31,7 @@
           <li>- V8</li>
         </ul>
       </section>
-      <section>
+      <section data-title="1.JS Engine">
         <h3>V8 특징</h3>
         <ul>
           <li>- 2006년 말 만들어진 JavaScript 엔진.</li>
@@ -39,17 +39,26 @@
           <li>- Chrome아 아니더라도 독립적으로 실행 가능하다.(Node.js, Electron) </li>
         </ul>
       </section>
-      <section>
+      <section data-title="2.JS Engine 작동원리">
         <h3>JavaScript 엔진의 작동원리</h3>
-        <ul>
-          <li>- Just-in-Time Compilation (JITC)</li>
-          <li>- JITC보다 interpreter가 더 낫다?</li>
-          <li>- Adaptive JIT Compilation</li>
-        </ul>
+        <p>Just-in-Time Compilation (JITC)</p>
       </section>
-      <section><img src="../assets/engine.png"/></section>
-      <section><img src="../assets/engine2.png"/></section>
-      <section>
+      <section data-title="2.JS Engine 작동원리">
+        <p>JITC or interpreter ?</p>
+      </section>
+      <section data-title="2.JS Engine 작동원리">
+        <p>
+          JITC + interpreter =
+          Adaptive JIT Compilation
+        </p>
+      </section>
+      <section data-title="2.JS Engine 작동원리(공통)">
+        <img src="../assets/engine.png"/>
+      </section>
+      <section data-title="2.JS Engine 작동원리(V8)">
+        <img src="../assets/engine3.png"/>
+      </section>
+      <section data-title="2.JS Engine 작동원리">
         <h3>인터프리터(Ignition)</h3>
         <pre><code class="javascript" data-trim>
           function hello(name) {
@@ -76,7 +85,7 @@
           Handler Table (size = 0)
         </code></pre>
       </section>
-      <section>
+      <section data-title="2.JS Engine 작동원리">
         <h3>Optimizing Compiler(TurboFan)</h3>
         <pre><code class="javascript" data-trim>
           function test() {
@@ -104,7 +113,7 @@
           [compiling method 0x02f422f091e1 &lt;JSFunction test (sfi = 00000021CFCD1001)&gt; using TurboFan]
         </code></pre>
       </section>
-      <section>
+      <section data-title="3.최적화의 조건">
         <h4>https://github.com/v8/v8/blob/master/src/execution/runtime-profiler.cc</h4>
         <pre><code class="javascript" data-trim data-line-numbers="8,9,10,11,12,13,14">
           OptimizationReason RuntimeProfiler::ShouldOptimize(JSFunction function,
@@ -137,11 +146,11 @@
         }
         </code></pre>
       </section>
-      <section>
-        <h3>Hidden Class</h3>
+      <section data-title="3.최적화의 조건">
+        <h4>Hidden Class</h4>
         <img src="../assets/hiddenclass.png"/>
       </section>
-      <section>
+      <section data-title="3.최적화의 조건">
         <h3>Inline Caching</h3>
         <pre><code class="javascript" data-trim>
           // Inline Caching
@@ -149,13 +158,13 @@
             return `Hello, ${user.firstName} ${user.lastName}`;
           }
           const user = {
-            firstName : 'gwanhoo',
+            firstName : 'hoo',
             lastName : 'park'
           }
-          hello(user); // 'Hello. park gwanhoo' 로 대체됩니다.
+          hello(user); // 'Hello. park hoo' 로 대체됩니다.
         </code></pre>
       </section>
-      <section>
+      <section data-title="3.최적화의 조건">
         <h3>Inline Caching</h3>
         <pre><code class="javascript" data-trim>
           // Inline Caching
@@ -164,35 +173,34 @@
           }
         </code></pre>
       </section>
-      <section>
+      <section data-title="4.처리성능 향상 방법">
         <h3>어떻게 최적화된 자바스크립트 코드를 작성할 것인가.</h3>
-        <p>
-          변수 스코프
-          가볍고 적은 코드
-          쓸데없는 반복문 쓰지 않기
-          쓸데없는 반복문 쓰지 않기
-          이벤트 위임
-          Gzip 압축
-          객체를 캐싱하여 성능 향상
-
-          똑같은 코드여도 실행환경에 따라 퍼포먼스는 천차만별이다.
-          각기다른 자바스크립트 엔진을 사용하는 브라우저가 서로 다른 결과를 내는 것은 어쩌면 아주 당연한 일일지도 모른다.
-          구현방법에 대한 표준화가 딱히 이루어져있는 것은 아닐테니까 말이다.
-        </p>
+        <ul>
+          <li>- 자바스크립트를 동적인 언어라고 생각하고 쓰면 좋다.</li>
+          <li>- 동적인 특성을 최대한 활용하는것도 좋지만 성능저하가 일어날수 있다는 점을 염두해야한다.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>감사합니다.</h3>
       </section>
     </div>
   </div>
 </template>
 <script>
-import Reveal from 'reveal.js/dist/reveal'
-import RevealMarkdown from 'reveal.js/plugin/markdown/markdown'
-import RevealHighLight from 'reveal.js/plugin/highlight/highlight'
-export default {
-  name: 'V8Engine',
-  mounted() {
-    Reveal.initialize({
-      plugins: [ RevealMarkdown, RevealHighLight]
-    })
+  import Reveal from 'reveal.js/dist/reveal'
+  import RevealMarkdown from 'reveal.js/plugin/markdown/markdown'
+  import RevealHighLight from 'reveal.js/plugin/highlight/highlight'
+  export default {
+    name: 'V8Engine',
+    mounted() {
+      Reveal.initialize({
+        plugins: [ RevealMarkdown, RevealHighLight]
+      });
+      Reveal.on( 'slidechanged', event => {
+        console.log(event.currentSlide);
+        var target = event.currentSlide;
+        document.getElementById("title").innerText = target.getAttribute("data-title");
+      } );
+    }
   }
-}
 </script>

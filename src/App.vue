@@ -8,6 +8,9 @@
     .reveal {
         font-family: 'Noto Sans KR', sans-serif;
     }
+    .reveal img {
+        margin : 10px 0 0 0 !important;
+    }
     .reveal pre {
         font-size: 0.47em;
     }
