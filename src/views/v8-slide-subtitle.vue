@@ -25,7 +25,7 @@
         <p class="subtitle fragment fade-in-then-out">V8엔진에서는 어떻게 자바스크립트 코드를 최적화 하는지 알아보겠습니다.</p>
         <p class="subtitle fragment fade-in-then-out">세번째에서는 V8엔진에서 어떤조건을 만족할때 최적화를 하는지 알아보겠습니다.</p>
         <p class="subtitle fragment fade-in-then-out">그리고 마지막으로 V8엔진 입장에서 자바스크립트 처리성능 향상 방법을 알아보겠습니다.</p>
-        <p class="subtitle fragment fade-in-then-out">물론 이 방법을 적용하시더라도 현재 담당하시는 어플리케이션의 속대롤 대폭 향상시키진 않습니다.</p>
+        <p class="subtitle fragment fade-in-then-out">물론 이 방법을 적용하시더라도 현재 담당하시는 어플리케이션의 속도롤 대폭 향상시키진 않습니다.</p>
         <p class="subtitle fragment fade-in-then-out">아! 이런 마음가짐? 으로 개발을 하시면 될 듯합니다.</p>
       </section>
       <section data-title="1.JS Engine">
@@ -58,7 +58,7 @@
         <p class="subtitle fragment fade-in-then-out">그러면 오늘 주제인 V8엔진에 대해 조금더 자세히 알아보겠습니다.</p>
       </section>
       <section data-title="1.JS Engine">
-        <h3>V8 특징</h3>
+        <h3>V8</h3>
         <ul>
           <li>- 2006년 말 만들어진 JavaScript 엔진.</li>
           <li>- 오픈 소스 이며 C++로 만들어짐.</li>
@@ -109,7 +109,7 @@
         <p class="subtitle fragment fade-in-then-out">Adaptive JIT Compilation 방식은 모든 코드를 일괄적으로 같은 수준의 최적화를 진행하는것이 아닙니다.</p>
         <p class="subtitle fragment fade-in-then-out">반복되는 수행 정도에 따라 유동적으로 최적화를 진행하는 방식입니다.</p>
         <p class="subtitle fragment fade-in-then-out">정리하면 최근의 자바스크립트엔진은 JITC 방식과 인터프리터 방식을 혼용해서 사용합니다.</p>
-        <p class="subtitle fragment fade-in-then-out">다음장의 그림에서 간단히 살펴보겠습니다.</p>
+        <p class="subtitle fragment fade-in-then-out">다음장의 그림에서 앞서말한 인터프리터와 JITC에 대해 간단히 살펴보겠습니다.</p>
       </section>
       <section data-title="2.JS Engine 작동원리(공통)">
         <img src="../assets/engine.png"/>
@@ -203,11 +203,12 @@
           [marking 0x02f422f091e1 &lt;JSFunction test (sfi = 00000021CFCD1001)&gt; for optimized recompilation, reason: hot and stable]
           [compiling method 0x02f422f091e1 &lt;JSFunction test (sfi = 00000021CFCD1001)&gt; using TurboFan]
         </code></pre>
-        <p class="subtitle fragment fade-in-then-out">이번 코드는 V8의 최적화 컴파일러인 TurboFan이 어떤 조건으로 최적화 대상을 구분하는지 보실수 있습니다.</p>
-        <p class="subtitle fragment fade-in-then-out">test 함수는 그냥 인자를 받아서 변형하고 걸러내고</p>
+        <p class="subtitle fragment fade-in-then-out">이번 코드는 V8의 최적화 컴파일러인 TurboFan이</p>
+        <p class="subtitle fragment fade-in-then-out">어떤 조건으로 최적화 대상을 구분하는지 보실수 있습니다.</p>
+        <p class="subtitle fragment fade-in-then-out">test 함수는 인자를 받아서 변형하고 걸러내고</p>
         <p class="subtitle fragment fade-in-then-out">순서를 뒤집어서 반환하는 역할을 수행합니다.</p>
         <p class="subtitle fragment fade-in-then-out">여기서 Turbofan이 감시하고 있는 최적화 대상은 test, map,</p>
-        <p class="subtitle fragment fade-in-then-out">filter, reverse, Array.from 입니다</p>
+        <p class="subtitle fragment fade-in-then-out">filter, reverse, Array.from 메서드 입니다</p>
         <p class="subtitle fragment fade-in-then-out">TurboFan이 함수를 최적화 대상으로 marking 하는 부분을 보면</p>
         <p class="subtitle fragment fade-in-then-out">최적화의 이유가 small function,</p>
         <p class="subtitle fragment fade-in-then-out">hot and stable이라고 나오는 것을 볼 수 있습니다.</p>
@@ -244,6 +245,7 @@
           return OptimizationReason::kDoNotOptimize;
         }
         </code></pre>
+        <p class="subtitle fragment fade-in-then-out">바로 이어서 최적화 대상을 선정하는 로직을 보시면</p>
         <p class="subtitle fragment fade-in-then-out">지금 보시는 코드는 github에 올라와있는 V8 코드중에 최적화의 대상을 선정하는 로직입니다.</p>
         <p class="subtitle fragment fade-in-then-out">흰색으로 잘 보이는 부분인데요.</p>
         <p class="subtitle fragment fade-in-then-out">이 함수가 몇번 호출되었는지(ticks_for_optimization을 넘길때)</p>
@@ -251,15 +253,16 @@
         <p class="subtitle fragment fade-in-then-out">각각 최적화 대상을 선정하는 로직입니다.</p>
         <p class="subtitle fragment fade-in-then-out">정리하면 kHotAndStable은 코드가 자주 호출되고 변경되지 않으며</p>
         <p class="subtitle fragment fade-in-then-out">kSmallFunction은 바이트코드의 길이를 보고 특정 바이트를 넘지 않으면 작은 함수라 판단하고 최적화를 진행합니다.</p>
+        <p class="subtitle fragment fade-in-then-out">그러면 최적화를 어떻게 진행하는지 살펴보겠습니다.</p>
       </section>
       <section data-title="3.최적화의 조건">
         <h4>Hidden Class</h4>
         <img src="../assets/hiddenclass.png"/>
-        <p class="subtitle fragment fade-in-then-out">앞에서도 말씀드린 최적화 방식중에 Hidden Class를 보겠습니다.</p>
+        <p class="subtitle fragment fade-in-then-out">앞에서도 말씀드린 최적화 방식중에 Hidden Class라는 방식을 보겠습니다.</p>
         <p class="subtitle fragment fade-in-then-out">자바스크립트는 동적 타입 언어이기 때문에 객체를 생성할때 메모리를 얼마나 할당해야하는지 모릅니다.</p>
         <p class="subtitle fragment fade-in-then-out">따라서 속성이 추가될 때마다 랜덤한 주소에 메모리를 할당하고</p>
         <p class="subtitle fragment fade-in-then-out">그 속성을 다루기 위해 위해 dictionary random한 메모리에 접근해야 합니다.</p>
-        <p class="subtitle fragment fade-in-then-out">자바스크립트 내에서 dictionary에 정의된 속성값을 찾는것은 느리기 때문에,</p>
+        <p class="subtitle fragment fade-in-then-out">자바스크립트 내에서 dictionary에 정의된 속성값을 찾는것은 느리기 때문에</p>
         <p class="subtitle fragment fade-in-then-out">V8 엔진에서는 Hidden class라는 다른 방식으로 검색합니다.</p>
         <p class="subtitle fragment fade-in-then-out">객체를 만들고 속성을 추가할 때 마다 새로운 클래스가 만들어지며, </p>
         <p class="subtitle fragment fade-in-then-out">다음에 같은 생성자를 사용하여 다시 객체를 만든다면 이미 만들어 두었던 히든 클래스를 사용하게 됩니다.</p>
