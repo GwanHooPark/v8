@@ -19,7 +19,7 @@
       </section>
       <section data-title="1.JS Engine">
         <h3>JavaScript Engine 이란?</h3>
-        <p>javascript 를 실행하는 프로그램 또는 인터프리터</p>
+        <p>JavaScript 를 실행하는 프로그램 또는 인터프리터</p>
       </section>
       <section data-title="1.JS Engine">
         <h3>Javascript 엔진의 종류</h3>
@@ -32,7 +32,7 @@
         </ul>
       </section>
       <section data-title="1.JS Engine">
-        <h3>V8 특징</h3>
+        <h3>V8</h3>
         <ul>
           <li>- 2006년 말 만들어진 JavaScript 엔진.</li>
           <li>- 오픈 소스 이며 C++로 만들어짐.</li>
@@ -176,8 +176,8 @@
       <section data-title="4.처리성능 향상 방법">
         <h3>어떻게 최적화된 자바스크립트 코드를 작성할 것인가.</h3>
         <ul>
-          <li>- 자바스크립트를 동적인 언어라고 생각하고 쓰면 좋다.</li>
-          <li>- 동적인 특성을 최대한 활용하는것도 좋지만 성능저하가 일어날수 있다는 점을 염두해야한다.</li>
+          <li>- hidden class나 inline caching의 이점을 최대한 활용</li>
+          <li>- 동적인 특성을 최대한 활용하는것도 좋지만 성능저하를 염두</li>
         </ul>
       </section>
       <section>
